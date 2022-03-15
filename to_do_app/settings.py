@@ -1,5 +1,5 @@
 
-#import django_heroku
+import django_heroku
 
 """
 Django settings for to_do_app project.
@@ -145,4 +145,4 @@ REST_FRAMEWORK = {
 }
 
 
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
