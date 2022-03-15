@@ -13,6 +13,8 @@ def signup_view(request):
             account = serializer.save()
             token, created = Token.objects.get_or_create(user=account)
             data['response'] = "Signup Successful!"
+            data['first_name'] = account.first_name
+            data['last_name'] = account.last_name
             data['username'] = account.username
             data['email'] = account.email
             data['token'] = token.key

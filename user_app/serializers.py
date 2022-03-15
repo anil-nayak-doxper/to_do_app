@@ -14,5 +14,9 @@ class SignupSerializer(serializers.ModelSerializer):
         account = User(
             email=self.validated_data['email'], username=self.validated_data['username'])
         account.set_password(password)
+        if 'first_name' in self.validated_data:
+            account.first_name = self.validated_data['first_name']
+        if 'last_name' in self.validated_data:
+            account.last_name = self.validated_data['last_name']
         account.save()
         return account
