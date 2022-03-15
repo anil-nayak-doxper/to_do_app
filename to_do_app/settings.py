@@ -1,5 +1,5 @@
 
-#import django_heroku
+import django_heroku
 
 """
 Django settings for to_do_app project.
@@ -28,7 +28,7 @@ SECRET_KEY = 'u)(hyyeh9t87i%bioa*o%g(#!bp=&0#ny9xmi*ubp%dw^1f(%)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1','anilnayak.herokuapp.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -145,4 +145,4 @@ REST_FRAMEWORK = {
 }
 
 
-#django_heroku.settings(locals())
+django_heroku.settings(locals())
