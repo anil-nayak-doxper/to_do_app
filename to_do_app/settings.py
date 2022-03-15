@@ -1,3 +1,6 @@
+
+import django_on_heroku
+
 """
 Django settings for to_do_app project.
 
@@ -140,3 +143,6 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+
+django_on_heroku.settings(locals())
