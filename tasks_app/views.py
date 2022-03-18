@@ -5,6 +5,7 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
 from tasks_app.models import SubTask, Task
+from tasks_app.send_mail_task import schedule_send_email_task
 from tasks_app.serializers import SubTaskSerializer, TaskSerializer
 
 
@@ -26,19 +27,23 @@ class TaskViewset(viewsets.ModelViewSet):
         title = data.get('title', '')
         description = data.get('description', '')
         due_date = data.get('due_date', '')
+        reminder = data.get('reminder', -1)
         if due_date:
             due_date = datetime.strptime(due_date, "%Y-%m-%d")
         else:
             due_date = datetime.today()+timedelta(days=5)
+        if reminder == -1:
+            reminder = 4
         if not title:
             return Response({'error': 'Title is required'}, status=status.HTTP_400_BAD_REQUEST)
         if Task.objects.filter(title=title).exists():
             return Response({'error': 'task with same title already exists'}, status=status.HTTP_400_BAD_REQUEST)
         task_data = {'user': request.user.id, 'title': title,
-                     'description': description, 'due_date': due_date}
+                     'description': description, 'due_date': due_date, 'reminder': reminder}
         serializer = TaskSerializer(data=task_data)
         if serializer.is_valid():
             serializer.save()
+            schedule_send_email_task(title)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

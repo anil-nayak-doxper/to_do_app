@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Task(models.Model):
-    PENDING = 0
-    COMPLETED = 1
+    PENDING = "Pending"
+    COMPLETED = "Completed"
     STATUS_OPTIONS = (
         (PENDING, "Pending"),
         (COMPLETED, "Completed"),
@@ -12,7 +12,8 @@ class Task(models.Model):
     title = models.CharField(max_length=20, null=True)
     description = models.CharField(max_length=200, null=True)
     due_date = models.DateTimeField()
-    status = models.IntegerField(choices=STATUS_OPTIONS, default=PENDING)
+    reminder = models.IntegerField()
+    status = models.CharField(max_length=10, choices=STATUS_OPTIONS, default=PENDING)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
@@ -20,8 +21,8 @@ class Task(models.Model):
 
 
 class SubTask(models.Model):
-    PENDING = 0
-    COMPLETED = 1
+    PENDING = "Pending"
+    COMPLETED = "Completed"
     STATUS_OPTIONS = (
         (PENDING, "Pending"),
         (COMPLETED, "Completed"),
@@ -29,7 +30,7 @@ class SubTask(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     title = models.CharField(max_length=20, null=True)
     description = models.CharField(max_length=200, null=True)
-    status = models.IntegerField(choices=STATUS_OPTIONS, default=PENDING)
+    status = models.CharField(max_length=10, choices=STATUS_OPTIONS, default=PENDING)
     created = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
