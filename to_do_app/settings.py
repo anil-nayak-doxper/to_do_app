@@ -1,5 +1,5 @@
 
-import django_heroku
+#import django_heroku
 
 """
 Django settings for to_do_app project.
@@ -151,4 +151,4 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'nayak.anil3655@gmail.com'
 EMAIL_HOST_PASSWORD = 'mojlapzlcksivvvq'
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
