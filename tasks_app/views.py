@@ -52,6 +52,7 @@ class TaskViewset(viewsets.ModelViewSet):
         data = request.data.copy()
         task_id = data.get('id', '')
         task_title = data.get('title', '')
+        reminder = data.get('reminder', -1)
         if not task_id and not task_title:
             return Response({'error': 'task_id or task_title is required'}, status=status.HTTP_400_BAD_REQUEST)
         if task_id:
@@ -69,6 +70,8 @@ class TaskViewset(viewsets.ModelViewSet):
         task_status = task.status
         if is_completed:
             task_status = Task.COMPLETED
+        if reminder >= 0:
+            task.reminder = reminder
         task.description = description
         task.status = task_status
         task.save()
